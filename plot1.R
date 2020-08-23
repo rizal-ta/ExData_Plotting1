@@ -7,6 +7,7 @@ if(!file.exists("household_power_consumption.txt")){
     fileurl <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
     download.file(fileurl, destfile = "data.zip", method = "curl")
     unzip("data.zip")
+    file.remove("data.zip")
 }
 
 ## Reading the dataset into a table and subseting what we only need
@@ -21,10 +22,11 @@ dat <- dat[,-1]
 names(dat)[1] <- "datetime"
 
 ## Plotting the histogram
+dev.new(height = 480, width = 480, units = "px")
+par(bg = NA)
 with(dat, hist(Global_active_power, col = "red",
                main = "Global Active Power", 
                xlab = "Global Active Power (kilowatts)"))
-par(bg = NA)
 
 ## Copying it to a png device
 dev.copy(png, "plot1.png", width = 480, height = 480, units = "px")

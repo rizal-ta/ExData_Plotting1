@@ -21,12 +21,16 @@ dat <- mutate(dat, Time = dmy_hms(paste(Date, Time)))
 dat <- dat[,-1]
 names(dat)[1] <- "datetime"
 
-## Plotting Global Active Power vs datetime as a line plot
+## Plotting three sub metering readings vs datetime as a line plot
 dev.new(height = 480, width = 480, units = "px")
 par(bg = NA)
-with(dat, plot(datetime, Global_active_power, type = "l", 
-               ylab = "Global Active Power (kilowatts)", xlab = ""))
+with(dat, plot(datetime, Sub_metering_1, type = "l", 
+               xlab = "", ylab = "Energy sub metering"))
+with(dat, points(datetime, Sub_metering_2, type = "l", col = "red"))
+with(dat, points(datetime, Sub_metering_3, type = "l", col = "blue"))
+legend("topright", lwd = c(1,1,1), col = c("black", "red", "blue"), 
+       legend = c("Sub metering 1", "Sub metering 2", "Sub metering 3"))
 
 ## Copying it to a png device
-dev.copy(png, "plot2.png", width = 480, height = 480, units = "px")
+dev.copy(png, "plot3.png", width = 480, height = 480, units = "px")
 dev.off()
